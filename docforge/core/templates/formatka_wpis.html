@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
 Proszę wypełnić wniosek:<br/>
+<form method="POST">
+{% csrf_token %}
 {{ pola|safe }}
+<input type='submit' value='Zloz wniosek'>
+</form>
 {% endblock %}
