@@ -1,7 +1,0 @@
-{% extends 'base.html' %}
-{% block content %}
-{% for f in formatki %}
-	<a href='/formatka/wpis/{{f.pk}}'>{{ f.nazwa }}</a><br/>
-{% endfor %}
-{{ post }}
-{% endblock %}
