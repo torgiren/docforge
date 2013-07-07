@@ -1,0 +1,2 @@
+class LengthMismachException(Exception):
+    pass
