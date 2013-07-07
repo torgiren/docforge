@@ -1,0 +1,14 @@
+{% extends 'docforge:templates/base.jinja2' %}
+{% block head %}
+<script src='/static/add_fields.js'>
+</script>
+{% endblock %}
+{% block content %}
+<form action='/formatki/add' method='POST'>
+<input type='button' value='Dodaj pole' onclick='addRow()'><br/>
+Nazwa: <input type='text' name='nazwa'><br/>
+<table id='tabela'>
+</table>
+<input type='submit' value='Dodaj'>
+</form>
+{% endblock %}
