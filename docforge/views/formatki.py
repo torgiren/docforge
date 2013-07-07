@@ -7,13 +7,17 @@ from docforge.errors import *
 class FormatkiView(object):
     def __init__(self, request):
         self.request = request
+        self.db = self.request.db['formatki']
 
-    def __list(self):
-        db = self.request.db['formatki']
+    def _list(self):
         return db.find()
 
-    def __add(self):
-        pass
+    def _add(self, name, zipped):
+        obj = {}
+        obj['nazwa'] = name
+        for z in zipped:
+            obj[z[0]] = z[1]
+        self.db.insert(obj)
 
     def _merge_field(self, post):
         """Wyciąga ze słownika post pola "nazwa_" oraz "typ",
@@ -28,7 +32,7 @@ class FormatkiView(object):
 
     @view_config(route_name='formatki_list', renderer='docforge:templates/list.jinja2')
     def list(self):
-        return {'items': self.__list()}
+        return {'items': self._list()}
 
     @view_config(route_name='formatki_add_form', renderer='docforge:templates/formatki_form.jinja2')
     def show_form(self):
@@ -36,8 +40,8 @@ class FormatkiView(object):
 
     @view_config(route_name='formatki_add_do', renderer='string')
     def add_form(self):
-        db = self.request.db['formatki']
-        #TODO Check for POST
-        print self.request.POST
-
+        if not self.request.POST.haskey('nazwa'):
+            raise NoFormNameFoundException
+        zipped = self._merge_field(self.request.POST)
+        self._add(self.request.POST['nazwa'], zipped)
         return self.request.POST

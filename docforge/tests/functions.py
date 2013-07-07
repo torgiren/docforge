@@ -11,5 +11,5 @@ class DummyMongo():
         return self.db
 
     def delete(self):
+        pass
         self.conn.drop_database(self.__dbname)
-
