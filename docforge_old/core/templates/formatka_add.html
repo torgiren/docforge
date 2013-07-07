@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<script>
+	var iter=0;
+	function deleteRow(param)
+	{
+		param.parentNode.parentNode.parentNode.parentNode.deleteRow(param.parentNode.parentNode.sectionRowIndex);
+	}
+	function addRow()
+	{
+		var tab = document.getElementById('tabela');
+		var row = tab.insertRow(-1);
+		var cellLeft = row.insertCell(0);
+		var textNode = document.createTextNode(iter);
+		cellLeft.appendChild(textNode);
+
+		var cellRight = row.insertCell(1);
+		var el = document.createElement('input');
+		el.type = 'text';
+		el.name = 'nazwa_' + iter;
+		cellRight.appendChild(el);
+
+		var cellRightSel = row.insertCell(2);
+		var sel = document.createElement('select');
+		sel.name = 'typ_' + iter;
+		sel.options[0] = new Option('Tekst', 'tekst');
+		sel.options[1] = new Option('Data', 'data');
+		sel.options[2] = new Option('Numer', 'numer');
+		cellRightSel.appendChild(sel);
+	
+		var cellDel = row.insertCell(3);
+		var del = document.createElement('input');
+		del.type='button';
+		del.value='Usun';
+		del.name='del_'+iter;
+		del.setAttribute('onclick', 'deleteRow(this)');
+//		del.onclick = deleteRow;
+		
+		cellDel.appendChild(del);
+
+
+		iter++;
+	};
+</script>
+<form method='POST'>
+	{% csrf_token %}
+	<input type='button' value='Dodaj pole' onclick="addRow()"><br/>
+	Nazwa: <input type='text' name='nazwa'><br/>
+	<table id='tabela'>
+	</table>
+	<input type='submit' value='Zapisz'>
+</form>
+{% endblock %}
