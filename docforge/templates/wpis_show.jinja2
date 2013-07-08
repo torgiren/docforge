@@ -1,0 +1,12 @@
+{% extends 'docforge:templates/base.jinja2' %}
+{% block content %}
+{% for i in items %}
+<table style='border: 1px solid'>
+<tr><td>Pole</td><td>Wartość</td></tr>
+{% for j in i %}
+<tr><td>{{j[0]}}</td><td>{{j[1]}}</td></tr>
+{% endfor %}
+</table>
+{% endfor %}
+{% endblock %}
+

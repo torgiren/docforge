@@ -1,0 +1,18 @@
+{% extends 'docforge:templates/base.jinja2' %}
+{% block content %}
+<table>
+<tr>
+{% for i in items[0] %}
+<td>{{i[0]}}</td>
+{% endfor %}
+</tr>
+{% for i in items %}
+<tr>
+    {% for j in i %}
+    <td>{{ j[1] }}</td>
+    {% endfor %}
+</tr>
+{% endfor %}
+</table>
+
+{% endblock %}
