@@ -21,7 +21,7 @@ function addRow()
     var sel = document.createElement('select');
     sel.name = 'typ_' + iter;
     $.ajax({
-        url:"http://localhost:6543/typy",
+        url:"http://localhost:6543/ajax/typy",
         success: function(data) 
         {
             for(var i in data)

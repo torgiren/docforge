@@ -1,8 +1,9 @@
 {% extends 'docforge:templates/base.jinja2' %}
 {% block content %}
+<h3>{{title}}</h3>
 <ul>
 {% for i in items %}
-<li>{{i}}</li>
+<li><a href='{{i.href}}'>{{i.verbose}}</a></li>
 {% endfor %}
 </ul>
 {% endblock %}

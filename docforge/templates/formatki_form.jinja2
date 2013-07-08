@@ -4,11 +4,11 @@
 </script>
 {% endblock %}
 {% block content %}
-<form action='/formatki/add' method='POST'>
-<input type='button' value='Dodaj pole' onclick='addRow()'><br/>
-Nazwa: <input type='text' name='nazwa'><br/>
+<form action='/formatki/add' method='POST' onSubmit="return confirm('Na pewno chcesz dodać ten formularz');">
+Nazwa: <input type='text' name='_nazwa'><br/>
 <table id='tabela'>
 </table>
-<input type='submit' value='Dodaj'>
+<input type='button' value='Dodaj pole' onclick='addRow()'><br/>
+<input type='submit' value='Zapisz formularz'>
 </form>
 {% endblock %}
