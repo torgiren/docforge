@@ -1,10 +1,12 @@
 {% extends 'docforge:templates/base.jinja2' %}
 {% block content %}
 Wypełnianie formularza <strong>{{nazwa}}</strong>
-<form method="POST" onsubmit='return confirm("Czy wszystko się zgadza?");'>
+<form action='/wpis/add' method="POST" onsubmit='return confirm("Czy wszystko się zgadza?");'>
 {% for i in items %}
-{{i.nazwa}}<input type='{{i.widget}}' name='{{i.nazwa}}'><br/>
+{{i.verbose}}:<input type='{{i.widget}}' name='pole_{{i.widget}}_{{i.nazwa}}'><br/>
 {% endfor %}
+
+<input type='hidden' name='_formatka' value='{{_formatka}}'>
 
 <input type='submit' value='Złóż wniosek'>
 </form>

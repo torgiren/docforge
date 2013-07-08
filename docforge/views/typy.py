@@ -6,8 +6,8 @@ class TypyView(object):
 
 
     def __list_names(self):
-        elements = self.request.db['typy'].find({}, {'nazwa':1})
-        elements = [(str(i['_id']), i['nazwa']) for i in elements]
+        elements = self.request.db['typy'].find({}, {'nazwa':1, 'widget':1})
+        elements = [(str(i['widget']), i['nazwa']) for i in elements]
         return elements
 
     @view_config(route_name='typy', renderer='json')

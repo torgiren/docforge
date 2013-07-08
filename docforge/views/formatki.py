@@ -2,6 +2,7 @@
 from pyramid.view import view_config
 from docforge.views.common import startwith
 import bson
+from slugify import slugify
 
 from docforge.errors import *
 
@@ -17,12 +18,12 @@ class FormatkiView(object):
         obj = {}
         obj['_nazwa'] = name
         for z in zipped:
-            obj[z[0]] = z[1]
+            obj["pole_%d" % z[0]] = z[1:]
         self.db.insert(obj)
 
     def _merge_field(self, post):
         """Wyciąga ze słownika post pola "nazwa_" oraz "typ",
-        a następnie tworzy z nich listę krotek"""
+        a następnie tworzy z nich listę krotek oraz dodaje slugifiową nazwę"""
         nazwy = startwith(post, "nazwa_")
         typy = startwith(post, "typ_")
         if len(nazwy) != len(typy):
@@ -31,7 +32,8 @@ class FormatkiView(object):
         typy.sort()
         nazwy = [post[i] for i in nazwy]
         typy = [post[i] for i in typy]
-        return zip(nazwy, typy)
+        slug = [slugify(i) for i in nazwy]
+        return zip(range(len(nazwy)), nazwy, typy, slug)
 
     def _get(self, id):
         return self.db.find_one({'_id': bson.ObjectId(id)})
@@ -43,7 +45,7 @@ class FormatkiView(object):
 
     @view_config(route_name='formatki_list', renderer='docforge:templates/list.jinja2')
     def list(self):
-        items = [{'verbose': i['_nazwa'], 'href': self.request.route_path('formatki_fill_form', id=i['_id'])} for i in self._list()]
+        items = [{'verbose': unicode(i['_nazwa']), 'href': self.request.route_path('formatki_fill_form', id=i['_id'])} for i in self._list()]
         return {'items': items, 'title': u'Lista dostępnych formularzy'}
 
     @view_config(route_name='formatki_add_form', renderer='docforge:templates/formatki_form.jinja2')
@@ -51,7 +53,7 @@ class FormatkiView(object):
         return {}
 
     @view_config(route_name='formatki_add_do', renderer='string')
-    def add_form(self):
+    def add_formatka(self):
         if not self.request.POST.get('_nazwa'):
             raise NoFormNameFoundException
         zipped = self._merge_field(self.request.POST)
@@ -66,5 +68,11 @@ class FormatkiView(object):
         nazwa = obj['_nazwa']
         del(obj['_nazwa'])
         del(obj['_id'])
-        items = [{'nazwa': i, 'widget': self._get_widget(j)} for (i,j) in obj.items()]
-        return {'nazwa': nazwa, 'items': items}
+        items = [{'nazwa': j[2], 'widget': j[1], 'verbose': j[0]} for (i,j) in obj.items()]
+        return {'nazwa': nazwa, 'items': items, '_formatka': id}
+
+    @view_config(route_name='formatki_fill_do', renderer='docforge:templates/list.jinja2')
+    def fill(self):
+        print "Jestem tutaj"
+        print self.request.POST
+        return {}
