@@ -3,7 +3,7 @@
 <table>
 <tr>
 {% for i in items[0] %}
-<td>{{i[0]}}</td>
+<td><a href='?sort={{i[0]}}{% if act == i[0]%}&rev=1{%endif%}'>{{i[0]}}</a></td>
 {% endfor %}
 </tr>
 {% for i in items %}

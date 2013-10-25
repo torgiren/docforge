@@ -25,13 +25,17 @@ class WpisView(object):
         self.db.insert(items)
         return {}
 
-    def _list(self, id=None):
+    def _list(self, id=None, sort=None, rev=None):
         if id:
             warunek = {'_formatka': id}
         else:
             warunek = None
         print "Warunek: ", warunek
-        objs = tuple(self.db.find(warunek, {'_formatka': 0, '_id': 0}))
+        objs = list(self.db.find(warunek, {'_formatka': 0, '_id': 0}))
+        if sort:
+            objs.sort(cmp=lambda x,y: cmp(x[sort], y[sort]))
+        if rev:
+            objs.reverse()
         print objs
 #        del(objs['_formatka'])
 #        del(objs['_id'])
@@ -52,7 +56,18 @@ class WpisView(object):
     @view_config(route_name='wpis_show', renderer='docforge:templates/wpis_list.jinja2')
     def show(self):
         id = self.request.matchdict.get('id', None)
+        if 'sort' in self.request.GET:
+            sort = self.request.GET['sort']
+        else:
+            sort = None
+        if 'rev' in self.request.GET:
+            rev = self.request.GET['rev']
+            act = None
+        else:
+            rev = None
+            act = sort
+        print "sort: ", sort
         print id
-        items = [i.items() for i in self._list(id)]
-        return {'items': items}
+        items = [i.items() for i in self._list(id, sort=sort, rev=rev)]
+        return {'items': items, 'act': act}
 
