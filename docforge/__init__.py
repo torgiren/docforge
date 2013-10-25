@@ -15,7 +15,7 @@ def main(global_config, **settings):
     config.include('docforge.routes.formatka.formatki', route_prefix='/formatki')
     config.include('docforge.routes.ajax.ajax', route_prefix='/ajax')
     config.include('docforge.routes.wpis.wpis', route_prefix='/wpis')
-    config.registry.db = pymongo.Connection('localhost')
+    config.registry.db = pymongo.Connection('database')
     config.add_request_method(add_db, 'db', reify=True)
     config.scan()
     return config.make_wsgi_app()

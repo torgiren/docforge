@@ -1,6 +1,6 @@
 def init():
     import pymongo
-    db = pymongo.Connection('localhost')['docforge']
+    db = pymongo.Connection('database')['docforge']
     typy = [
         {'nazwa': 'Tekst', 'widget': 'text'},
         {'nazwa': 'Liczba', 'widget': 'number'},
