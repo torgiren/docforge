@@ -4,7 +4,8 @@ def init():
     typy = [
         {'nazwa': 'Tekst', 'widget': 'text'},
         {'nazwa': 'Liczba', 'widget': 'number'},
-        {'nazwa': 'Data', 'widget': 'date'}]
+        {'nazwa': 'Data', 'widget': 'date'},
+        {'nazwa': 'Checkbox', 'widget': 'checkbox'}]
     db['typy'].insert(typy)
 if __name__ == '__main__':
     init()
