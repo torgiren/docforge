@@ -1,0 +1,21 @@
+{% extends 'docforge:templates/base.jinja2' %}
+{% block content %}
+<table>
+<tr>
+{% for i in items[0] %}
+<td><a href='?sort={{i[0]}}{% if act == i[0]%}&rev=1{%endif%}'>{{i[0]}}</a>
+<a href='?sort={{i[0]}}&rev=1'><img src='/static/arrow_down.jpg' width='20px'></a>
+<a href='?sort={{i[0]}}'><img src='/static/arrow_up.jpg' width='20px'></a>
+</td>
+{% endfor %}
+</tr>
+{% for i in items %}
+<tr>
+    {% for j in i %}
+    <td>{{ j[1] }}</td>
+    {% endfor %}
+</tr>
+{% endfor %}
+</table>
+
+{% endblock %}

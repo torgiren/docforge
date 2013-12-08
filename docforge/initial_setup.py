@@ -1,10 +1,11 @@
 def init():
     import pymongo
-    db = pymongo.Connection('localhost')['docforge']
+    db = pymongo.Connection('database')['docforge']
     typy = [
         {'nazwa': 'Tekst', 'widget': 'text'},
         {'nazwa': 'Liczba', 'widget': 'number'},
-        {'nazwa': 'Data', 'widget': 'date'}]
+        {'nazwa': 'Data', 'widget': 'date'},
+        {'nazwa': 'Checkbox', 'widget': 'checkbox'}]
     db['typy'].insert(typy)
 if __name__ == '__main__':
     init()
