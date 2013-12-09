@@ -1,0 +1,13 @@
+<container name='main'>
+	<container name='dane_osobowe' pos='100 100'>
+		<container name='imie'>
+			<object type='label' value='Imie:' for='imie'/>
+			<object type='newline'/>
+			<object type='input' name='imie'/>
+		</container>
+	</container>
+	<container name='data' post='200 50'>
+		<object type='input' name='miasto'/>
+		<object type='input' name='data'/>
+	</container>
+</container>
