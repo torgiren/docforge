@@ -3,8 +3,10 @@ from pyramid.view import view_config
 from docforge.views.common import startwith
 import bson
 from slugify import slugify
+from playground import form
 
 from docforge.errors import *
+
 
 class FormatkiView(object):
     def __init__(self, request):
@@ -60,15 +62,20 @@ class FormatkiView(object):
         self._add(self.request.POST['_nazwa'], zipped)
         return self.request.POST
 
+    @view_config(route_name='formatki_fill2_form', renderer='string')
+    def fill2_form(self):
+        tree = form.minidom.parse('/home/torgiren/docforge/docforge/playground/doc.xml')
+        return form.print_c(tree.childNodes[0])
+
     @view_config(route_name='formatki_fill_form', renderer='docforge:templates/formatki_fill.jinja2')
-#    @view_config(route_name='formatki_fill_form', renderer='string')
     def fill_form(self):
-        id=self.request.matchdict['id']
+        id = self.request.matchdict['id']
         obj = self._get(id)
         nazwa = obj['_nazwa']
         del(obj['_nazwa'])
         del(obj['_id'])
-        items = [{'nazwa': j[2], 'widget': j[1], 'verbose': j[0]} for (i,j) in obj.items()]
+        items = [{'nazwa': j[2], 'widget': j[1], 'verbose': j[0]}
+                 for (i, j) in obj.items()]
         return {'nazwa': nazwa, 'items': items, '_formatka': id}
 
     @view_config(route_name='formatki_fill_do', renderer='docforge:templates/list.jinja2')

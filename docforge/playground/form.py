@@ -2,7 +2,7 @@
 #*-* coding: utf8 *-*
 from xml.dom import minidom
 
-tree = minidom.parse('doc.xml')
+#tree = minidom.parse('doc.xml')
 
 
 def parse_object(obj):
@@ -23,17 +23,19 @@ def parse_object(obj):
 
 
 def print_c(cont, ident=""):
-    print ident,
-    print "<div name={name}>".format(name=cont.getAttribute('name'))
+    result = ""
+    result += ident
+    result += "<div name={name}>".format(name=cont.getAttribute('name')) + "\n"
     ident += "  "
     for i in [i for i in cont.childNodes if i.nodeName == 'object']:
-        print ident,
-        print parse_object(i)
+        result += ident
+        result += parse_object(i) + "\n"
     for i in [i for i in cont.childNodes if i.nodeName == 'container']:
-        print_c(i, ident)
+        result += print_c(i, ident)
     ident = ident[:-2]
-    print ident,
-    print "</div>"
+    result += ident
+    result += "</div>" + "\n"
+    return result
 
-print_c(tree.childNodes[0])
+#print print_c(tree.childNodes[0])
 
