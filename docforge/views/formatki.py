@@ -83,3 +83,8 @@ class FormatkiView(object):
         print "Jestem tutaj"
         print self.request.POST
         return {}
+
+    @view_config(route_name='formatki_edytor', renderer='docforge:templates/edytor.jinja2')
+    def edytor(self):
+        print "Edytor"
+        return {}

@@ -1,0 +1,83 @@
+{% extends 'docforge:templates/base.jinja2' %}
+{% block head %}
+<style>
+.content {
+	width: 100px;
+	height: 100px;
+}
+#editable {
+	min-height: 500px;
+	width: 1024px;
+	margin:auto;
+}
+</style>
+<script>
+var actual = $('#editable');
+function setter()
+{
+	$(".content").draggable({distance: 20, containment: 'parent'});
+	$(".content").resizable({containment: 'parent'});
+	$("#editable").click(function(e) {
+		select($(this),e);
+	});
+//	$("#editable").mouseleave(function(e) {
+//		leave($(this),e);
+//	});
+};
+function select(obj,e)
+{
+	leave(actual,e);
+	obj.css('color', 'red');
+	obj.css('border', '2px solid blue');
+	actual = obj;
+	$('#akt').html(actual.attr('id'));
+	e.stopImmediatePropagation();
+};
+function leave(obj,e)
+{
+	obj.css('color', 'black');
+	obj.css('border', '1px black solid');
+	e.stopImmediatePropagation();
+};
+$(function() {
+	$("#add").click(function() {
+		i = 1 + Math.floor(Math.random() * 100);
+		d = document.createElement('div');
+		$(d).attr('id','zew'+i);
+		$(d).addClass('ui-widget-content').
+		addClass('content').
+		appendTo($(actual)).
+		click(function(e) { select($(this),e);}).
+		html("Nowy element");
+		setter();
+
+	});
+	$("#del").click(function() {
+		if($(actual).attr('id') != 'editable')
+		{
+			actual.remove();
+		};
+	});
+	$("#editable").resizable({resize: function(event, ui) {
+		$(this).css('width','1024px');
+		}
+	});
+	setter();
+});
+</script>
+{% endblock %}
+{% block content %}
+<div id='menu'>
+<button id='add'>Dodaj</button><br/>
+<button id='del'>Usuń</button><br/>
+Tu będzie menu<br/>
+Aktualny: <span id='akt'></span>
+</div>
+	<div id='editable' class='ui-widget-content' style='border: 1px black solid;'>
+	A to wizualna część
+	</div>
+</div>
+
+
+
+{% endblock %}
