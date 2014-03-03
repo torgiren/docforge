@@ -1,0 +1,13 @@
+body {
+	background: gray;
+}
+.content {
+	width: 100px;
+	height: 100px;
+}
+.editable {
+	min-height: 500px;
+	width: 1024px;
+	margin:auto;
+}
+
