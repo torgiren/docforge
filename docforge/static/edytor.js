@@ -22,10 +22,12 @@ function setter()
 function update_edit_field()
 {
 	var wynik="";
-	wynik+="Nazwa: <input type='text' name='nazwa' value='" + actual.attr('id') + "'><br/>";
+	wynik+="Nazwa: <input type='text' id='object_nazwa' value='" + actual.attr('id') + "'><br/>";
 	pos = actual.position();
-	wynik+="Position <input type='number' name='posx' value='" + pos.left + "'> ";
-	wynik+="<input type='number' name='posy' value='" + pos.top + "'></br>";
+	wynik+="Size: <input type='number' id='object_width' value='" + actual.width() +"'>";
+	wynik+="<input type='number' id='object_height' value='" + actual.height() + "'><br/>";
+	wynik+="Position <input type='number' id='object_posx' value='" + pos.left + "'> ";
+	wynik+="<input type='number' id='object_posy' value='" + pos.top + "'></br>";
 
 	wynik+="Typ: <select id='object_type' name='type'>";
 	wynik+="<option value='1' ";
@@ -38,8 +40,8 @@ function update_edit_field()
 	wynik+=">Tekst</option>";
 	wynik+="</select><br/>";
 	
-
 	wynik+="Zawartosc: <input id='object_content' type='text' value=''><br/>";
+	wynik+="<button id='object_save'>Zapis</button><br/>";
 
 
 	$("#edit_field").html(wynik);
@@ -51,15 +53,22 @@ function update_edit_field()
 		$('#object_content')[0].value = wew.html();
 	}
 
-	$('#object_content').change(function(e){
+	$('#object_save').click(function(e){
 		var wew = get_inner(actual);
-		wew.html($('#object_content')[0].value);
-	});
-
-	$('#object_type').change(function(e){
 		var klasa = $('#object_type')[0].value;
+		var width = $('#object_width')[0].value;
+		var height = $('#object_height')[0].value;
+		var posx = Number($('#object_posx')[0].value);
+		var posy = Number($('#object_posy')[0].value);
+		var id = $('#object_nazwa')[0].value;
+		wew.html($('#object_content')[0].value);
 		actual.attr('klasa',klasa);
-		var wew = get_inner(actual);
+		actual.attr('id', id);
+
+		actual.css({'position': "absolute", "top": posy, "left": posx});
+		actual.width(width);
+		actual.height(height);
+
 		switch(klasa)
 		{
 			case '0':
@@ -89,6 +98,10 @@ function leave(obj,e)
 	obj.css('color', 'black');
 	obj.css('border', '1px black solid');
 	e.stopImmediatePropagation();
+	if(obj.attr('klasa') == 1)
+	{
+		obj.children('span').children('input').css('width', obj.width() - 4 );
+	};
 };
 function dump(obiekt,ind)
 {	
@@ -115,10 +128,12 @@ $(function() {
 		d = document.createElement('div');
 		$(d).attr('id','zew'+i);
 		$(d).attr('klasa', 0);
-		$(d).addClass('ui-widget-content').
-			addClass('content').
+		//$(d).addClass('ui-widget-content').
+		$(d).addClass('content').
 			appendTo($(actual)).
-			click(function(e) { select($(this),e);});
+			click(function(e) { select($(this),e);}).
+			css('border', '1px black solid').
+			css('color', 'black');
 //			html("Nowy element");
 		e = document.createElement('span');
 		$(e).attr('id','content'+i);
