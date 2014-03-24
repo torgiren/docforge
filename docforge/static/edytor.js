@@ -35,14 +35,14 @@ function update_edit_field()
 	pola = $('#main').html().match(/{{[a-zA-Z0-9]*}}/g);
 	if(pola)
 	{
-		console.log("2");
 		wynik+="<ul>";
 		for(i=0; i < pola.length; i++)
 		{
+			var nazwa = pola[i].slice(2,-2);
 			wynik += "<hr>";
-			wynik += pola[i] + ":<br/>";
+			wynik += nazwa + ":<br/>";
 			wynik += "<form id='form_" + i + "'>";
-			wynik += "<input type='text' name='nazwa' value='" + pola[i] + "'/>";
+			wynik += "<input type='hidden' name='nazwa' value='" + nazwa + "'/>";
 			wynik += "<select name='typ'>"
 			wynik += "<option>Input</option>";
 			wynik += "<option>Checkbox</option>";
