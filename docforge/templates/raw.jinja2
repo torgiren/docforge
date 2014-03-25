@@ -1,0 +1,27 @@
+{% extends 'docforge:templates/base.jinja2' %}
+{% block head %}
+<link rel='stylesheet' type='text/css' href='/static/view.css'>
+<link rel='stylesheet' type='text/css' href='/static/edytor.css'>
+<script src='/static/edytor.js'></script>
+
+{% endblock %}
+{% block content %}
+{{html|safe}}
+<script>
+a = document.getElementsByTagName('div');
+for(var i=0; i<a.length; i++)
+{
+    if(a[i].id.match('zew[0-9]+'))
+    {
+        obj = $('#'+a[i].id);
+        obj.width(obj.attr('width')+"px");
+        obj.height(obj.attr('heigth')+"px");
+        obj.css({"top": obj.attr('top')+"px"});
+        console.log(obj.attr('left'));
+        obj.css({"left": obj.attr('left')+"px"});
+        obj.css({"position": "absolute"});
+
+    }
+};
+</script>
+{% endblock %}
