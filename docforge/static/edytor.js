@@ -41,7 +41,7 @@ function update_edit_field()
 			var nazwa = pola[i].slice(2,-2);
 			wynik += "<hr>";
 			wynik += nazwa + ":<br/>";
-			wynik += "<form id='form_" + i + "'>";
+			wynik += "<form id='form_" + i + "' class='template_forms'>";
 			wynik += "<input type='hidden' name='nazwa' value='" + nazwa + "'/>";
 			wynik += "<select name='typ'>"
 			wynik += "<option>Input</option>";
@@ -149,8 +149,39 @@ $(function() {
 	});
 	$("#export").click(function() {
 		wynik = "";
+//		wynik += $('#nazwa')[0].value + "<br/>";
 		dump("main",0);
+		forms = $('.template_forms');;
+		forms2 = Array();
+		for(i=0; i<forms.length; i++)
+		{
+			var obj = $('#'+forms[i].id);
+			forms2.push(obj.serialize());
+//			wynik += obj.serialize() + "<br/>";
+		};
+		$.ajax({
+			type: "POST",
+			url: "/api/zapisz_template",
+			data: {
+				nazwa: $('#nazwa')[0].value,
+				template: wynik,
+				pola: forms2
+			},
+			success: function(msg) {
+				console.log("success");
+				console.log(msg);
+			},
+			complete: function(r) {
+				console.log("complete");
+				console.log(r);
+			},
+			error: function(error) {
+				console.log("error");
+				console.log(error);
+			}		
+		})
 		$("#export_field").html(wynik);
+		wynik = "";
 	});
 
 
