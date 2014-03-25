@@ -32,13 +32,13 @@ function update_edit_field()
 	wynik+="Zawartosc: <br/><textarea id='object_content' type='text' cols=40 rows=5 value=''></textarea><br/>";
 	wynik+="<button id='object_save'>Zapis</button><br/>";
 
-	pola = $('#main').html().match(/{{[a-zA-Z0-9]*}}/g);
+	pola = $('#main').html().match(/{[a-zA-Z0-9]*}/g);
 	if(pola)
 	{
 		wynik+="<ul>";
 		for(i=0; i < pola.length; i++)
 		{
-			var nazwa = pola[i].slice(2,-2);
+			var nazwa = pola[i].slice(1,-1);
 			wynik += "<hr>";
 			wynik += nazwa + ":<br/>";
 			wynik += "<form id='form_" + i + "' class='template_forms'>";
