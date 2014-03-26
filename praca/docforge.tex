@@ -1,0 +1,35 @@
+\documentclass[a4paper,12pt,oneside]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{polski}
+\usepackage{polski}
+\usepackage{color}
+\usepackage{helvet}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{titlesec}
+\usepackage{indentfirst}
+\usepackage{verbatim}
+\usepackage{moreverb}
+\usepackage{nameref}
+\usepackage{listings}
+\usepackage{url}
+\usepackage[font=footnotesize,labelfont=bf]{caption}
+\geometry{hmargin={2cm, 2cm}, height=10.0in}
+\assignpagestyle{\chapter}{empty}
+\newcommand{\param}[1]{\textit{\textless #1\textgreater}}
+\title{System IPS opaty o iptables}
+\author{Marcin TORGiren Fabrykowski}
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+\begin{document}
+\nocite{*}
+%\bibliographystyle{plain}
+\bibliographystyle{amsplain}
+\include{title}
+
+\addcontentsline{toc}{chapter}{Bibliografia}
+\bibliography{IPS}
+\newpage
+\addcontentsline{toc}{chapter}{Spis rysunków}
+\listoffigures 
+\end{document}
